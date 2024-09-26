@@ -55,21 +55,129 @@
             font-size: 1.5rem;
             padding: 20px;
         }
+
+        .winner {
+            font-size: 2rem;
+            margin-top: 50px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>이상형 월드컵</h1>
-        <div class="options">
-            <div class="option">
-                <img src="image1.jpg" alt="옵션 1">
-                <p>옵션 1</p>
-            </div>
-            <div class="option">
-                <img src="image2.jpg" alt="옵션 2">
-                <p>옵션 2</p>
-            </div>
+        <div class="options" id="options">
+            <!-- 옵션들이 JavaScript를 통해 동적으로 생성됩니다 -->
         </div>
+        <div class="winner" id="winner"></div>
     </div>
+
+    <script>
+        // 이미지 및 옵션 데이터
+        const items = [
+            { name: '옵션 1', img: 'image1.jpg' },
+            { name: '옵션 2', img: 'image2.jpg' },
+            { name: '옵션 3', img: 'image3.jpg' },
+            { name: '옵션 4', img: 'image4.jpg' },
+            { name: '옵션 5', img: 'image5.jpg' },
+            { name: '옵션 6', img: 'image6.jpg' },
+            { name: '옵션 7', img: 'image7.jpg' },
+            { name: '옵션 8', img: 'image8.jpg' }
+        ];
+
+        let currentRound = [];
+        let nextRound = [];
+        let roundNumber = 1;
+
+        // 게임 초기화
+        function initGame() {
+            shuffleArray(items);
+            currentRound = items.slice();
+            nextRound = [];
+            roundNumber = 1;
+            document.getElementById('winner').innerHTML = '';
+            nextMatch();
+        }
+
+        // 배열 섞기
+        function shuffleArray(array) {
+            array.sort(() => Math.random() - 0.5);
+        }
+
+        // 다음 매치 표시
+        function nextMatch() {
+            if (currentRound.length === 0) {
+                if (nextRound.length === 1) {
+                    showWinner(nextRound[0]);
+                } else {
+                    currentRound = nextRound.slice();
+                    nextRound = [];
+                    roundNumber++;
+                    nextMatch();
+                }
+                return;
+            }
+
+            const option1 = currentRound.shift();
+            const option2 = currentRound.shift();
+
+            displayOptions(option1, option2);
+        }
+
+        // 옵션 표시
+        function displayOptions(option1, option2) {
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+
+            const optionElements = [option1, option2].map(option => {
+                const div = document.createElement('div');
+                div.className = 'option';
+                div.onclick = () => selectOption(option);
+
+                const img = document.createElement('img');
+                img.src = option.img;
+                img.alt = option.name;
+
+                const p = document.createElement('p');
+                p.textContent = option.name;
+
+                div.appendChild(img);
+                div.appendChild(p);
+
+                return div;
+            });
+
+            optionElements.forEach(element => optionsDiv.appendChild(element));
+        }
+
+        // 옵션 선택 시
+        function selectOption(option) {
+            nextRound.push(option);
+            nextMatch();
+        }
+
+        // 우승자 표시
+        function showWinner(winner) {
+            document.getElementById('options').innerHTML = '';
+            document.getElementById('winner').innerHTML = `우승자는 바로... <strong>${winner.name}</strong> 입니다!`;
+
+            const winnerDiv = document.createElement('div');
+            winnerDiv.className = 'option';
+
+            const img = document.createElement('img');
+            img.src = winner.img;
+            img.alt = winner.name;
+
+            const p = document.createElement('p');
+            p.textContent = winner.name;
+
+            winnerDiv.appendChild(img);
+            winnerDiv.appendChild(p);
+
+            document.getElementById('options').appendChild(winnerDiv);
+        }
+
+        // 게임 시작
+        initGame();
+    </script>
 </body>
 </html>
