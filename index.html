@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>이상형 월드컵</title>
+    <style>
+        /* 최신 CSS 스타일 적용 */
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 50px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .option {
+            width: 45%;
+            background-color: #fff;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .option:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .option img {
+            width: 100%;
+            height: auto;
+        }
+
+        .option p {
+            font-size: 1.5rem;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>이상형 월드컵</h1>
+        <div class="options">
+            <div class="option">
+                <img src="image1.jpg" alt="옵션 1">
+                <p>옵션 1</p>
+            </div>
+            <div class="option">
+                <img src="image2.jpg" alt="옵션 2">
+                <p>옵션 2</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
