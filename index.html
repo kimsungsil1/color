@@ -21,7 +21,12 @@
 
         h1 {
             font-size: 3rem;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
+        }
+
+        .round-info {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
         }
 
         .options {
@@ -60,19 +65,29 @@
             font-size: 2rem;
             margin-top: 50px;
         }
+
+        /* 재시작 버튼 스타일 */
+        #restart-button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            margin-top: 30px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>이상형 월드컵</h1>
+        <div class="round-info" id="round-info"></div>
         <div class="options" id="options">
             <!-- 옵션들이 JavaScript를 통해 동적으로 생성됩니다 -->
         </div>
         <div class="winner" id="winner"></div>
+        <button id="restart-button" onclick="initGame()" style="display:none;">다시 시작하기</button>
     </div>
 
     <script>
-        // 이미지 및 옵션 데이터
+        // 이미지 및 옵션 데이터 (32개)
         const items = [
             { name: '옵션 1', img: 'image1.jpg' },
             { name: '옵션 2', img: 'image2.jpg' },
@@ -81,7 +96,31 @@
             { name: '옵션 5', img: 'image5.jpg' },
             { name: '옵션 6', img: 'image6.jpg' },
             { name: '옵션 7', img: 'image7.jpg' },
-            { name: '옵션 8', img: 'image8.jpg' }
+            { name: '옵션 8', img: 'image8.jpg' },
+            { name: '옵션 9', img: 'image9.jpg' },
+            { name: '옵션 10', img: 'image10.jpg' },
+            { name: '옵션 11', img: 'image11.jpg' },
+            { name: '옵션 12', img: 'image12.jpg' },
+            { name: '옵션 13', img: 'image13.jpg' },
+            { name: '옵션 14', img: 'image14.jpg' },
+            { name: '옵션 15', img: 'image15.jpg' },
+            { name: '옵션 16', img: 'image16.jpg' },
+            { name: '옵션 17', img: 'image17.jpg' },
+            { name: '옵션 18', img: 'image18.jpg' },
+            { name: '옵션 19', img: 'image19.jpg' },
+            { name: '옵션 20', img: 'image20.jpg' },
+            { name: '옵션 21', img: 'image21.jpg' },
+            { name: '옵션 22', img: 'image22.jpg' },
+            { name: '옵션 23', img: 'image23.jpg' },
+            { name: '옵션 24', img: 'image24.jpg' },
+            { name: '옵션 25', img: 'image25.jpg' },
+            { name: '옵션 26', img: 'image26.jpg' },
+            { name: '옵션 27', img: 'image27.jpg' },
+            { name: '옵션 28', img: 'image28.jpg' },
+            { name: '옵션 29', img: 'image29.jpg' },
+            { name: '옵션 30', img: 'image30.jpg' },
+            { name: '옵션 31', img: 'image31.jpg' },
+            { name: '옵션 32', img: 'image32.jpg' }
         ];
 
         let currentRound = [];
@@ -95,12 +134,26 @@
             nextRound = [];
             roundNumber = 1;
             document.getElementById('winner').innerHTML = '';
+            document.getElementById('restart-button').style.display = 'none';
+            updateRoundInfo();
             nextMatch();
         }
 
         // 배열 섞기
         function shuffleArray(array) {
             array.sort(() => Math.random() - 0.5);
+        }
+
+        // 라운드 정보 업데이트
+        function updateRoundInfo() {
+            let roundNames = {
+                1: '32강',
+                2: '16강',
+                3: '8강',
+                4: '준결승',
+                5: '결승'
+            };
+            document.getElementById('round-info').innerHTML = `현재 라운드: ${roundNames[roundNumber] || ''}`;
         }
 
         // 다음 매치 표시
@@ -112,6 +165,7 @@
                     currentRound = nextRound.slice();
                     nextRound = [];
                     roundNumber++;
+                    updateRoundInfo();
                     nextMatch();
                 }
                 return;
@@ -131,7 +185,7 @@
             const optionElements = [option1, option2].map(option => {
                 const div = document.createElement('div');
                 div.className = 'option';
-                div.onclick = () => selectOption(option);
+                div.onclick = function() { selectOption(option); };
 
                 const img = document.createElement('img');
                 img.src = option.img;
@@ -158,7 +212,9 @@
         // 우승자 표시
         function showWinner(winner) {
             document.getElementById('options').innerHTML = '';
+            document.getElementById('round-info').innerHTML = '';
             document.getElementById('winner').innerHTML = `우승자는 바로... <strong>${winner.name}</strong> 입니다!`;
+            document.getElementById('restart-button').style.display = 'inline-block';
 
             const winnerDiv = document.createElement('div');
             winnerDiv.className = 'option';
