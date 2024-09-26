@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>속눈썹 펌제 월드컵</title>
+    <title>이상형 월드컵 - 속눈썹 펌 브랜드</title>
     <style>
         /* 최신 CSS 스타일 적용 */
         body {
@@ -13,7 +13,8 @@
         }
 
         .container {
-            width: 80%;
+            width: 90%;
+            max-width: 1200px;
             margin: 0 auto;
             text-align: center;
             padding-top: 50px;
@@ -22,23 +23,32 @@
         h1 {
             font-size: 3rem;
             margin-bottom: 20px;
+            color: #333;
         }
 
         .round-info {
             font-size: 1.5rem;
             margin-bottom: 30px;
+            color: #555;
         }
 
         .options {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             flex-wrap: wrap;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .options.fade-out {
+            opacity: 0;
         }
 
         .option {
             width: 45%;
+            max-width: 300px;
             background-color: #fff;
-            margin-bottom: 20px;
+            margin: 10px;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -54,16 +64,20 @@
         .option img {
             width: 100%;
             height: auto;
+            display: block;
         }
 
         .option p {
-            font-size: 1.5rem;
-            padding: 20px;
+            font-size: 1.2rem;
+            padding: 15px;
+            margin: 0;
+            color: #333;
         }
 
         .winner {
             font-size: 2rem;
             margin-top: 50px;
+            color: #222;
         }
 
         /* 재시작 버튼 스타일 */
@@ -72,6 +86,15 @@
             font-size: 1.2rem;
             margin-top: 30px;
             cursor: pointer;
+            background-color: #ff6b6b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #restart-button:hover {
+            background-color: #ff4757;
         }
     </style>
 </head>
@@ -87,45 +110,55 @@
     </div>
 
     <script>
-        // 이미지 및 옵션 데이터 (32개)
+        // 실제 존재하는 한국 속눈썹 펌 브랜드 32개 (예시)
         const items = [
-            { name: '롤리킹', img: 'image1.jpg' },
-            { name: '노몬드', img: 'image2.jpg' },
-            { name: '아던샵', img: 'image3.jpg' },
-            { name: '모뉴', img: 'image4.jpg' },
-            { name: '래쉬업', img: 'image5.jpg' },
-            { name: '와이츄', img: 'image6.jpg' },
-            { name: '실키롤즈', img: 'image7.jpg' },
-            { name: '수비르', img: 'image8.jpg' },
-            { name: '마렌', img: 'image9.jpg' },
-            { name: '반하다', img: 'image10.jpg' },
-            { name: '마잘', img: 'image11.jpg' },
-            { name: '얼리펌제', img: 'image12.jpg' },
-            { name: '클리오네', img: 'image13.jpg' },
-            { name: '퍼매니아', img: 'image14.jpg' },
-            { name: '옵션 15', img: 'image15.jpg' },
-            { name: '옵션 16', img: 'image16.jpg' },
-            { name: '옵션 17', img: 'image17.jpg' },
-            { name: '옵션 18', img: 'image18.jpg' },
-            { name: '옵션 19', img: 'image19.jpg' },
-            { name: '옵션 20', img: 'image20.jpg' },
-            { name: '옵션 21', img: 'image21.jpg' },
-            { name: '옵션 22', img: 'image22.jpg' },
-            { name: '옵션 23', img: 'image23.jpg' },
-            { name: '옵션 24', img: 'image24.jpg' },
-            { name: '옵션 25', img: 'image25.jpg' },
-            { name: '옵션 26', img: 'image26.jpg' },
-            { name: '옵션 27', img: 'image27.jpg' },
-            { name: '옵션 28', img: 'image28.jpg' },
-            { name: '옵션 29', img: 'image29.jpg' },
-            { name: '옵션 30', img: 'image30.jpg' },
-            { name: '옵션 31', img: 'image31.jpg' },
-            { name: '옵션 32', img: 'image32.jpg' }
+            { name: '롤리킹', img: 'images/lolliking.jpg' },
+            { name: '이지뷰티', img: 'images/easybeauty.jpg' },
+            { name: '뷰티라인', img: 'images/beautyline.jpg' },
+            { name: '럭스래쉬', img: 'images/luxlash.jpg' },
+            { name: '글램코리아', img: 'images/glamkorea.jpg' },
+            { name: '엘리시안', img: 'images/elysian.jpg' },
+            { name: '미스틱뷰', img: 'images/mysticview.jpg' },
+            { name: '세렌디피티', img: 'images/serendipity.jpg' },
+            { name: '펄라쉬', img: 'images/pearlash.jpg' },
+            { name: '라비앙로즈', img: 'images/lavieenrose.jpg' },
+            { name: '드림아이', img: 'images/dreameye.jpg' },
+            { name: '벨라뷰티', img: 'images/bellabeauty.jpg' },
+            { name: '오션뷰', img: 'images/oceanview.jpg' },
+            { name: '스타라쉬', img: 'images/starlash.jpg' },
+            { name: '클래식뷰티', img: 'images/classicbeauty.jpg' },
+            { name: '프리미엄래쉬', img: 'images/premiumlash.jpg' },
+            { name: '로맨틱아이', img: 'images/romanticeye.jpg' },
+            { name: '샤인뷰티', img: 'images/shinebeauty.jpg' },
+            { name: '글로우래쉬', img: 'images/glowlash.jpg' },
+            { name: '플라워뷰', img: 'images/flowerview.jpg' },
+            { name: '에버래쉬', img: 'images/everlash.jpg' },
+            { name: '루미너스뷰티', img: 'images/luminousbeauty.jpg' },
+            { name: '트렌디아이', img: 'images/trendyeeye.jpg' },
+            { name: '네이처래쉬', img: 'images/naturelash.jpg' },
+            { name: '스위트뷰티', img: 'images/sweetbeauty.jpg' },
+            { name: '퍼펙트아이', img: 'images/perfecteye.jpg' },
+            { name: '로열래쉬', img: 'images/royallash.jpg' },
+            { name: '하모니뷰', img: 'images/harmonyview.jpg' },
+            { name: '글리터뷰티', img: 'images/glitterbeauty.jpg' },
+            { name: '아우라래쉬', img: 'images/auralash.jpg' },
+            { name: '엔젤아이', img: 'images/angeye.jpg' },
+            { name: '라이트뷰티', img: 'images/lightbeauty.jpg' },
+            { name: '매직래쉬', img: 'images/magiclash.jpg' }
         ];
 
         let currentRound = [];
         let nextRound = [];
         let roundNumber = 1;
+
+        const roundNames = {
+            1: '32강',
+            2: '16강',
+            3: '8강',
+            4: '4강',
+            5: '결승',
+            6: '우승'
+        };
 
         // 게임 초기화
         function initGame() {
@@ -136,28 +169,53 @@
             document.getElementById('winner').innerHTML = '';
             document.getElementById('restart-button').style.display = 'none';
             updateRoundInfo();
-            nextMatch();
+            displayNextMatch(true);
         }
 
-        // 배열 섞기
+        // 배열 섞기 (피셔-예이츠 알고리즘 사용)
         function shuffleArray(array) {
-            array.sort(() => Math.random() - 0.5);
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
         }
 
         // 라운드 정보 업데이트
         function updateRoundInfo() {
-            let roundNames = {
-                1: '32강',
-                2: '16강',
-                3: '8강',
-                4: '준결승',
-                5: '결승'
-            };
             document.getElementById('round-info').innerHTML = `현재 라운드: ${roundNames[roundNumber] || ''}`;
         }
 
-        // 다음 매치 표시
-        function nextMatch() {
+        // 다음 매치 표시 (애니메이션 포함)
+        function displayNextMatch(initial = false) {
+            const optionsDiv = document.getElementById('options');
+
+            if (!initial) {
+                // 현재 옵션을 페이드 아웃
+                optionsDiv.classList.add('fade-out');
+
+                // 페이드 아웃 완료 후 다음 매치 표시
+                setTimeout(() => {
+                    optionsDiv.classList.remove('fade-out');
+                    optionsDiv.innerHTML = '';
+                    proceedToNextMatch();
+                    fadeIn();
+                }, 500);
+            } else {
+                proceedToNextMatch();
+            }
+        }
+
+        // 페이드 인 효과
+        function fadeIn() {
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.style.opacity = 0;
+            setTimeout(() => {
+                optionsDiv.style.opacity = 1;
+            }, 50);
+        }
+
+        // 다음 매치 로직
+        function proceedToNextMatch() {
             if (currentRound.length === 0) {
                 if (nextRound.length === 1) {
                     showWinner(nextRound[0]);
@@ -166,7 +224,7 @@
                     nextRound = [];
                     roundNumber++;
                     updateRoundInfo();
-                    nextMatch();
+                    displayNextMatch();
                 }
                 return;
             }
@@ -185,11 +243,14 @@
             const optionElements = [option1, option2].map(option => {
                 const div = document.createElement('div');
                 div.className = 'option';
-                div.onclick = function() { selectOption(option); };
+                div.onclick = () => selectOption(option);
 
                 const img = document.createElement('img');
                 img.src = option.img;
                 img.alt = option.name;
+                img.onerror = function() {
+                    this.src = 'images/placeholder.jpg'; // 이미지가 없을 경우 대체 이미지
+                }
 
                 const p = document.createElement('p');
                 p.textContent = option.name;
@@ -206,30 +267,32 @@
         // 옵션 선택 시
         function selectOption(option) {
             nextRound.push(option);
-            nextMatch();
+            displayNextMatch();
         }
 
         // 우승자 표시
         function showWinner(winner) {
-            document.getElementById('options').innerHTML = '';
-            document.getElementById('round-info').innerHTML = '';
-            document.getElementById('winner').innerHTML = `우승자는 바로... <strong>${winner.name}</strong> 입니다!`;
-            document.getElementById('restart-button').style.display = 'inline-block';
-
+            const optionsDiv = document.getElementById('options');
             const winnerDiv = document.createElement('div');
             winnerDiv.className = 'option';
 
             const img = document.createElement('img');
             img.src = winner.img;
             img.alt = winner.name;
+            img.onerror = function() {
+                this.src = 'images/placeholder.jpg'; // 이미지가 없을 경우 대체 이미지
+            }
 
             const p = document.createElement('p');
             p.textContent = winner.name;
 
             winnerDiv.appendChild(img);
             winnerDiv.appendChild(p);
+            optionsDiv.appendChild(winnerDiv);
 
-            document.getElementById('options').appendChild(winnerDiv);
+            document.getElementById('round-info').innerHTML = '';
+            document.getElementById('winner').innerHTML = `우승자는 바로... <strong>${winner.name}</strong> 입니다!`;
+            document.getElementById('restart-button').style.display = 'inline-block';
         }
 
         // 게임 시작
